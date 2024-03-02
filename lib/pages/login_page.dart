@@ -34,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
                 _titleWidget(),
                 _loginForm(),
                 _loginButton(),
+                _registerPageLink(),
               ],
             ),
           ),
@@ -91,15 +92,16 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _passwordTextField() {
     return TextFormField(
-      obscureText: true,
-      decoration: const InputDecoration(hintText: "Password"),
-      onSaved: (_value) {
-        setState(() {
-          _password = _value;
-        });
-      },
-      validator: (_value) => _value!.length > 8 ? null : "Please enter password greater than 8 characters"
-    );
+        obscureText: true,
+        decoration: const InputDecoration(hintText: "Password"),
+        onSaved: (_value) {
+          setState(() {
+            _password = _value;
+          });
+        },
+        validator: (_value) => _value!.length > 8
+            ? null
+            : "Please enter password greater than 8 characters");
   }
 
   Widget _loginButton() {
@@ -122,9 +124,24 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget _registerPageLink() {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, "register"),
+      child: const Text(
+        "Dont have an account ?",
+        style: TextStyle(
+          color: Colors.blue,
+          fontSize: 15,
+          fontWeight: FontWeight.w200,
+        ),
+      ),
+    );
+  }
+
   void _loginUser() {
-    if(_loginFormKey.currentState!.validate()){
+    if (_loginFormKey.currentState!.validate()) {
       _loginFormKey.currentState!.save();
+      Navigator.pushNamed(context, 'home');
     }
   }
 }
