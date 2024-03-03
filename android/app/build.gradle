@@ -22,6 +22,11 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+//firebase
+apply plugin : 'com.android.application'
+apply plugin : 'com.google.gms.google-services'
+//>>>>>>>>>>>>>>>>
+
 android {
     namespace "com.example.instaclone"
     compileSdkVersion flutter.compileSdkVersion
@@ -45,7 +50,7 @@ android {
         applicationId "com.example.instaclone"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -64,4 +69,10 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+
+dependencies {
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:32.7.3')
+    implementation 'com.google.firebase:firebase-analytics'
+    //>>>>>>>>>>>>
+}
