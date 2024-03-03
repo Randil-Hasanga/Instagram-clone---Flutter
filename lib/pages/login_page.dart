@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
+import 'package:instaclone/services/firebase_services.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,9 +14,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   double? _deviceHeight, _deviceWidth;
 
+  FirebaseService? _firebaseService;
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
+
+  @override
+  void initState() {
+    super.initState();
+    _firebaseService = GetIt.instance.get<FirebaseService>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
             _password = _value;
           });
         },
-        validator: (_value) => _value!.length > 8
+        validator: (_value) => _value!.length >= 8
             ? null
             : "Please enter password greater than 8 characters");
   }
@@ -138,10 +147,15 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _loginUser() {
+  void _loginUser() async {
     if (_loginFormKey.currentState!.validate()) {
       _loginFormKey.currentState!.save();
-      Navigator.pushNamed(context, 'home');
+
+      bool _result = await _firebaseService!
+          .loginUser(email: _email!, password: _password!);
+      if (_result) {
+        Navigator.popAndPushNamed(context, 'home');
+      }
     }
   }
 }
