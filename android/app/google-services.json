@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "358940279855",
+    "project_id": "instaclone-c4abc",
+    "storage_bucket": "instaclone-c4abc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358940279855:android:aea68fb6240e8c227872da",
+        "android_client_info": {
+          "package_name": "com.example.instaclone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0YdYuPS0BW03yYvJGaqG_JKxqTv5lLRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
