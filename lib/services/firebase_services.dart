@@ -91,7 +91,6 @@ class FirebaseService {
       String _userId = _auth.currentUser!.uid;
       String _fileName = Timestamp.now().millisecondsSinceEpoch.toString() +
           p.extension(_image.path); // create filename for image
-          
 
       UploadTask _task = _storage
           .ref('images/$_userId/$_fileName')
@@ -119,6 +118,15 @@ class FirebaseService {
     return _db
         .collection(POSTS_COLLECTION)
         .orderBy('timestamp', descending: true)
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> getUserPosts() {
+    String _userId = _auth.currentUser!.uid;
+    return _db
+        .collection(POSTS_COLLECTION)
+        .where("userID", isEqualTo: _userId)
+        .orderBy('timestamp',descending: true)
         .snapshots();
   }
 }
