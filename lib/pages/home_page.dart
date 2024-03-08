@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:instaclone/pages/feed_page.dart';
 import 'package:instaclone/pages/profile_page.dart';
+import 'package:instaclone/services/firebase_services.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +20,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentPage = 0;
+
+  FirebaseService? _firebaseService;
+
+  @override
+  void initState() {
+    super.initState();
+    _firebaseService = GetIt.instance.get<FirebaseService>();
+  }
 
   final List<Widget> _pages = [
     FeedPage(),
@@ -33,7 +46,9 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              _postImage();
+            },
             child: const Icon(Icons.add_a_photo),
           ),
           Padding(
@@ -49,7 +64,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: _bottomNavigation(),
-      body: _pages[_currentPage],
+      body: _pages[_currentPage], // show page
     );
   }
 
@@ -73,5 +88,13 @@ class _HomePageState extends State<HomePage> {
         ),
       ],
     );
+  }
+
+  void _postImage() async {
+
+    FilePickerResult? _result = await FilePicker.platform.pickFiles(type: FileType.image);
+    File _image = File(_result!.files.first.path!);
+
+    await _firebaseService!.postImage(_image);
   }
 }

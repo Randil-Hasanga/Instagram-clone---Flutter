@@ -14,6 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   double? _deviceHeight, _deviceWidth;
 
+
   FirebaseService? _firebaseService;
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   String? _email;
@@ -153,6 +154,7 @@ class _LoginPageState extends State<LoginPage> {
 
       bool _result = await _firebaseService!
           .loginUser(email: _email!, password: _password!);
+      
       if (_result) {
         Navigator.popAndPushNamed(context, 'home');
       }
