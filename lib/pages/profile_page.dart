@@ -149,7 +149,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 });
           } else {
-            return Container();
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       ),
