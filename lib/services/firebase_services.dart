@@ -126,7 +126,10 @@ class FirebaseService {
     return _db
         .collection(POSTS_COLLECTION)
         .where("userID", isEqualTo: _userId)
-        .orderBy('timestamp',descending: true)
         .snapshots();
+  }
+
+  Future<void> logout() async {
+    await _auth.signOut();
   }
 }

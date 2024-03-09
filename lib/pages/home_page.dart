@@ -49,16 +49,25 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               _postImage();
             },
-            child: const Icon(Icons.add_a_photo),
+            child: const Icon(
+              Icons.add_a_photo,
+              color: Colors.white,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
+              left: 20.0,
+              right: 20.0,
             ),
             child: GestureDetector(
-              onTap: () {},
-              child: const Icon(Icons.logout),
+              onTap: () async {
+                await _firebaseService!.logout();
+                Navigator.popAndPushNamed(context, 'login');
+              },
+              child: const Icon(
+                Icons.logout,
+                color: Colors.white,
+              ),
             ),
           )
         ],
@@ -69,30 +78,36 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _bottomNavigation() {
-    return BottomNavigationBar(
-      currentIndex: _currentPage,
-      onTap: (_index) {
-        // getting index from items list
-        setState(() {
-          _currentPage = _index;
-        });
-      },
-      items: const [
-        BottomNavigationBarItem(
-          label: 'Feed',
-          icon: Icon(Icons.feed),
-        ),
-        BottomNavigationBarItem(
-          label: 'Profile',
-          icon: Icon(Icons.account_box),
-        ),
-      ],
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+      child: BottomNavigationBar(
+        currentIndex: _currentPage,
+        onTap: (_index) {
+          // getting index from items list
+          setState(() {
+            _currentPage = _index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            label: 'Feed',
+            icon: Icon(Icons.feed),
+          ),
+          BottomNavigationBarItem(
+            label: 'Profile',
+            icon: Icon(Icons.account_box),
+          ),
+        ],
+      ),
     );
   }
 
   void _postImage() async {
-
-    FilePickerResult? _result = await FilePicker.platform.pickFiles(type: FileType.image);
+    FilePickerResult? _result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
     File _image = File(_result!.files.first.path!);
 
     await _firebaseService!.postImage(_image);

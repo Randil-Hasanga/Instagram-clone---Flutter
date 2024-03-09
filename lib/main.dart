@@ -30,10 +30,24 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'InstaClone',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 5, 73, 175)),
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromARGB(255, 149, 123, 219),
+          elevation: 3.0,
+          shadowColor: Colors.black,
+          backgroundColor: Color.fromARGB(255, 5, 73, 175),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+            ),
+          ),
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color.fromARGB(255, 5, 73, 175),
+          unselectedItemColor: Colors.black,
+          selectedItemColor: Colors.white,          
         ),
       ),
       initialRoute: 'login',
